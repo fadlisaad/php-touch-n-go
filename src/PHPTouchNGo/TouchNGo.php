@@ -87,7 +87,7 @@ class TouchNGo {
         $data = json_encode($payload);
 
         // fetch private key from file and ready it
-        $pkeyid = openssl_pkey_get_private(file_get_contents('dbkl-private-key.pem'));
+        $pkeyid = openssl_pkey_get_private(file_get_contents('sample-private-key.pem'));
 
         // compute signature
         openssl_sign($data, $signature, $pkeyid, OPENSSL_ALGO_SHA256);

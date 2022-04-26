@@ -1,25 +1,21 @@
 <?php
-require('TouchNGo.php');
+require_once('src/PHPTouchNGo/TouchNGo.php');
 
-$order_title = $_POST['order_title'];
-$amount = $_POST['amount'];
-$return_url = $_POST['return_url'];
 $transaction_id = $_POST['transaction_id'];
+$acquirement_id = $_POST['acquirement_id'];
 
 $data = [
-    'order_title' => $order_title,
-    'amount' => $amount,
-    'return_url' => $return_url,
-    'transaction_id' => $transaction_id
+    'transaction_id' => $transaction_id,
+    'acquirement_id' => $acquirement_id
 ];
 
 $tng = new TouchNGo();
-$payload = $tng->createOrder($data);
+$payload = $tng->queryOrder($data);
 
 $curl = curl_init();
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://api-sd.tngdigital.com.my/alipayplus/acquiring/order/create.htm',
+  CURLOPT_URL => 'https://api-sd.tngdigital.com.my/alipayplus/acquiring/order/query.htm',
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -37,5 +33,3 @@ $response = curl_exec($curl);
 
 curl_close($curl);
 echo $response;
-
-// save acquirementId for query purpose

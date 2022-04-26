@@ -19,7 +19,7 @@
       "PHPTouchNGo\\": "src/PHPTouchNGo/"
     },
     "files": [
-      "src/PHPTouchNGo/PHPTouchNGo.php"
+      "src/PHPTouchNGo/TouchNGo.php"
     ]
   },
   "extra": {

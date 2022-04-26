@@ -1,0 +1,16 @@
+{
+  "name": "fadlisaad/php-touch-n-go",
+  "description": "Basic implementation of Touch N Go transaction using PHP",
+  "type": "library",
+  "require": {
+    "php": ">=7.4"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Fadli Saad",
+      "email": "fadlisaad@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev"
+}

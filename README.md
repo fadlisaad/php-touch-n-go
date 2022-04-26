@@ -2,7 +2,9 @@
 Base code for Touch N Go
 
 # How to install
-composer require fadlisaad/php-touch-n-go
+```
+$ composer require fadlisaad/php-touch-n-go
+```
 
 # How to use
 - 

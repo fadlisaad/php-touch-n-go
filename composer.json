@@ -4,7 +4,7 @@
   "type": "library",
   "require": {
     "php": ">=7.4",
-    "illuminate/support": "5.6.* || 5.7.* || 5.8.* || 6.0.*"
+    "guzzlehttp/guzzle": "*"
   },
   "license": "MIT",
   "authors": [
@@ -16,7 +16,7 @@
   "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
-      "PHPTouchNGo\\": "src/PHPTouchNGo/"
+      "FadliSaad\\PHPTouchNGo\\": "src"
     },
     "files": [
       "src/PHPTouchNGo/TouchNGo.php"
@@ -25,7 +25,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "PHPTouchNGo\\PHPTouchNGoServiceProvider"
+        "FadliSaad\\PHPTouchNGo\\PHPTouchNGoServiceProvider"
       ]
     }
   },

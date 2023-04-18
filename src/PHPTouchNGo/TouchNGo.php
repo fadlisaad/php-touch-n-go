@@ -1,8 +1,8 @@
 <?php
-require ('config.php');
+use Illuminate\Support\Facades\Storage;
 
-class TouchNGo {
-
+class TouchNGo
+{
     public function createOrder($request)
     {
         header("Content-Type: application/json; charset=UTF-8");
@@ -13,8 +13,8 @@ class TouchNGo {
             'head' => [
                 'version' => '1.0',
                 'function' => 'alipayplus.acquiring.order.create',
-                'clientId' => CLIENT_ID,
-                'clientSecret' => CLIENT_SECRET,
+                'clientId' => env('CLIENT_ID'),
+                'clientSecret' => env('CLIENT_SECRET'),
                 'reqTime' => $date->format('c'), // The ISO-8601 date (e.g. 2013-05-05T16:34:42+00:00)
                 'reqMsgId' => $guid
             ],
@@ -27,8 +27,8 @@ class TouchNGo {
                     ],
                     'merchantTransId' => $guid
                 ],
-                'merchantId' => MERCHANT_ID,
-                'productCode' => PRODUCT_CODE,
+                'merchantId' => env('MERCHANT_ID'),
+                'productCode' => env('PRODUCT_CODE'),
                 'signAgreementPay' => 'false',
                 'envInfo' => [
                     'terminalType' => 'SYSTEM',
@@ -41,7 +41,7 @@ class TouchNGo {
             ]
         ];
 
-        $signedPayload = $this->signature($payload);
+        $signedPayload = TouchNGo::signature($payload);
         
         $data = [
             'request' => $payload,
@@ -61,18 +61,18 @@ class TouchNGo {
             'head' => [
                 'version' => '1.0',
                 'function' => 'alipayplus.acquiring.order.query',
-                'clientId' => CLIENT_ID,
-                'clientSecret' => CLIENT_SECRET,
+                'clientId' => env('CLIENT_ID'),
+                'clientSecret' => env('CLIENT_SECRET'),
                 'reqTime' => $date->format('c'), // The ISO-8601 date (e.g. 2013-05-05T16:34:42+00:00)
                 'reqMsgId' => $guid
             ],
             'body' => [
-                'merchantId' => MERCHANT_ID,
+                'merchantId' => env('MERCHANT_ID'),
                 'acquirementId' => $request['acquirement_id']
             ]
         ];
 
-        $signedPayload = $this->signature($payload);
+        $signedPayload = TouchNGo::signature($payload);
         
         $data = [
             'request' => $payload,
@@ -82,12 +82,13 @@ class TouchNGo {
         return json_encode($data);
     }
 
-    private function signature($payload)
+    public function signature($payload)
     {
+        $private_key = Storage::get(env('TNG_PRIVATE_KEY'));
         $data = json_encode($payload);
 
         // fetch private key from file and ready it
-        $pkeyid = openssl_pkey_get_private(file_get_contents('sample-private-key.pem'));
+        $pkeyid = openssl_pkey_get_private(file_get_contents($private_key));
 
         // compute signature
         openssl_sign($data, $signature, $pkeyid, OPENSSL_ALGO_SHA256);

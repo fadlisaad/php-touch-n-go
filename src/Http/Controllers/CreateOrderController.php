@@ -24,7 +24,7 @@ class CreateOrderController extends Controller
 
         $payload = TouchNGo::createOrder($data);
 
-        $response = Http::acceptJson()->asForm()->post('https://api-sd.tngdigital.com.my/alipayplus/acquiring/order/create.htm', [
+        $response = Http::acceptJson()->asForm()->post(env('API_URL').'/order/create.htm', [
             $data
         ]);
 

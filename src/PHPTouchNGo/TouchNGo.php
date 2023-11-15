@@ -13,8 +13,8 @@ class TouchNGo
             'head' => [
                 'version' => '1.0',
                 'function' => 'alipayplus.acquiring.order.create',
-                'clientId' => env('CLIENT_ID'),
-                'clientSecret' => env('CLIENT_SECRET'),
+                'clientId' => config('CLIENT_ID'),
+                'clientSecret' => config('CLIENT_SECRET'),
                 'reqTime' => $date->format('c'), // The ISO-8601 date (e.g. 2013-05-05T16:34:42+00:00)
                 'reqMsgId' => $guid
             ],
@@ -27,8 +27,8 @@ class TouchNGo
                     ],
                     'merchantTransId' => $guid
                 ],
-                'merchantId' => env('MERCHANT_ID'),
-                'productCode' => env('PRODUCT_CODE'),
+                'merchantId' => config('MERCHANT_ID'),
+                'productCode' => config('PRODUCT_CODE'),
                 'signAgreementPay' => 'false',
                 'envInfo' => [
                     'terminalType' => 'SYSTEM',
@@ -61,13 +61,13 @@ class TouchNGo
             'head' => [
                 'version' => '1.0',
                 'function' => 'alipayplus.acquiring.order.query',
-                'clientId' => env('CLIENT_ID'),
-                'clientSecret' => env('CLIENT_SECRET'),
+                'clientId' => config('CLIENT_ID'),
+                'clientSecret' => config('CLIENT_SECRET'),
                 'reqTime' => $date->format('c'), // The ISO-8601 date (e.g. 2013-05-05T16:34:42+00:00)
                 'reqMsgId' => $guid
             ],
             'body' => [
-                'merchantId' => env('MERCHANT_ID'),
+                'merchantId' => config('MERCHANT_ID'),
                 'acquirementId' => $request['acquirement_id']
             ]
         ];
@@ -84,7 +84,7 @@ class TouchNGo
 
     public function signature($payload)
     {
-        $private_key = Storage::get(env('TNG_PRIVATE_KEY'));
+        $private_key = Storage::get(config('TNG_PRIVATE_KEY'));
         $data = json_encode($payload);
 
         // fetch private key from file and ready it
